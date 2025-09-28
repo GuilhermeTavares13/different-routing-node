@@ -11,28 +11,34 @@ const form = `
     </form>
 `;
 
+const anotherUser = `
+    <form action='/registerUser' method='GET'>
+        <button type='submit'>Register User</button>
+    </form>    
+`
+
 let name = ''
 
 app.use(bodyParser.urlencoded({extended: false}));
-
+ 
 app.post('/users',(req,res,next) => {
-    console.log(req.body);
     name = req.body.username;
     res.redirect('/');
 })
 
-app.get('/registerUser',(req,res,next) => {
+app.get('/registerUser',(req,res) => {
     res.send(form);
 })
 
-app.get('/test',(req,res,next) => {
+app.get('/test',(req,res) => {
     res.send(`<h1>Testing routes</h1>`);
 })
 
-app.get('/',(req,res,next) => {
+app.get('/',(req,res) => {
     res.send(`      
         <h1>Server running on port ${serverPort} </h1>
-        <p>${name}</p>
+        ${name ? '<p>' + name + '</p>' : ''}
+        ${anotherUser}
     `);
 })
 
